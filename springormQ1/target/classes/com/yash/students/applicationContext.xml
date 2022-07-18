@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+           
+	<context:annotation-config />
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	
+		<constructor-arg name="url"
+			value="jdbc:mysql://localhost:3306/school" />
+		<constructor-arg name="username" value="root" />
+		<constructor-arg name="password" value="root" />
+	</bean>
+
+	<bean id="jdbcTempleteObject"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="studentDao" class="com.yash.students.dao.StudentDao" name="studentDao">
+		<property name="jdbcTemplate" ref="jdbcTempleteObject" />
+	</bean>
+	<bean id="classDao" class="com.yash.students.dao.ClasssDao" name="classDao">
+		<property name="jdbcTemplate" ref="jdbcTempleteObject" />
+	</bean>
+	<bean id="resultDao" class="com.yash.students.dao.ResultDao" name="resultDao">
+		<property name="jdbcTemplate" ref="jdbcTempleteObject" />
+	</bean>
+
+</beans>
